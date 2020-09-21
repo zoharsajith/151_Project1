@@ -6,6 +6,9 @@ var scalar = 3.5;
 var speed = 0.1;
 var bool = false;
 
+var fade;
+var fadeAmount = 1;
+
 let s = [];
 
 var c = {
@@ -22,7 +25,7 @@ var m = {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
-
+  fade = 0;
 }
 
 
@@ -30,7 +33,12 @@ function draw() {
 
 	for(let i = 0; i < s.length; i++){
 		s[i].draw();
+		setTimeout(function (){
+			s[i].setAlpha(0);
+		}, 3000)
 	}
+
+
 	
 }
 
@@ -47,11 +55,22 @@ class spiral{
 
 	    var x = offsetX + cos(angle) * scalar;
 		var y = offsetY + sin(angle) * scalar;
-		fill(c.r, c.g, c.b);
+		fill(c.r, c.g, c.b, fade);
 		noStroke();
 		ellipse(x, y, 5, 5);
 		angle += speed;
 		scalar += speed;
+
+		if(fade<0){
+			fadeAmount = 1;
+		}
+
+		if(fade >255){
+			fadeAmount = -10;
+		}
+
+		fade += fadeAmount;
+		print(fade);
 		
 		}
 	}
